@@ -1,6 +1,11 @@
 # space-center-pi
 
-## Installation
+## Running on a Raspberry Pi
+
+1. git clone https://github.com/jonathanrevell/space-center-pi
+1. python main.py
+
+## Installation outside of a Raspberry Pi device
 
 1. Make sure python 3 is installed
 1. It may be worthwhile to install [pyenv](https://github.com/pyenv/pyenv)
