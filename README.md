@@ -17,7 +17,7 @@
 ## Installing Klein
 A better web server https://pypi.org/project/klein/0.2.3/
 
-    pip install klein
+    pip3 install klein
 
     // Or with pyenv
     pyenv exec pip install klein
@@ -27,7 +27,7 @@ A better web server https://pypi.org/project/klein/0.2.3/
 1. Install gpiozero pigpio https://gpiozero.readthedocs.io/en/stable/remote_gpio.html
 1. Run the program
 
-    GPIOZERO_PIN_FACTORY=mock python main.py
+    GPIOZERO_PIN_FACTORY=mock python3 main.py
 
     // Or with pyenv
     GPIOZERO_PIN_FACTORY=mock pyenv exec python main.py

@@ -1,0 +1,12 @@
+import smbus
+import time
+bus =smbus.SMBus(1)
+bus.write_byte_data(0x20, 0x00, 0x00)
+time.sleep(0.5)
+bus.write_byte_data(0x20, 0x09, 0xFF)
+
+sudo apt-get update
+sudo apt-get install i2c-tools
+i2cdetect -r -y 1
+i2cset -y 1 0x20 0x00 0x00
+i2cset -y 0x20 0x06 0x00

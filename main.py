@@ -31,7 +31,7 @@ barGraphComponents.add("nitrogen", "bargraph")
 # barGraphChain.write(msg.data)
 
 
-PORT = 4057
+PORT = 8080
 @route("/")
 def hello(request):
     return "Hello, world!"
@@ -44,4 +44,4 @@ def do_post(request):
     return "Success!"
 
 
-run("localhost", 4057)
+run("0.0.0.0", 8080)
