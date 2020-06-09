@@ -1,6 +1,4 @@
 import RPi.GPIO as GPIO
-import time
-import math
 
 def switch(pin):
   GPIO.setmode(GPIO.BCM)

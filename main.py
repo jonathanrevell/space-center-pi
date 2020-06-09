@@ -18,10 +18,10 @@ Out2 = LED(21)
 
 def alternateLED():
    while 1:
-      Out1.on()
-      Out2.off()
-      Out1.off()
-      Out2.on()
+       Out1.on()
+       Out2.off()
+       Out1.off()
+       Out2.on()
 
 def readInputs():
    potTemp = potentiometer(23)
@@ -42,6 +42,26 @@ def readInputs():
    swNitro2 = switch(13)
    sw11 = switch(19)
    sw12 = switch(26)
+   sw13 = switch(16)
+#   print (potTemp)
+#   print (potHumid)
+#   print (potElec)
+#   print (potScrub)
+#   print (potOxy)
+#   print (potNitro)
+#   print (swTemp1)
+#   print (swTemp2)
+#   print (swHumid1)
+#   print (swHumid2)
+#   print (swElec1)
+#   print (swElec2)
+#   print (swOxy1)
+#   print (swOxy2)
+#   print (swNitro1)
+#   print (swNitro2)
+#   print (sw11)
+#   print (sw12)
+#   print (sw13)
 
 def startServer():
    PORT = 8080
@@ -59,20 +79,20 @@ def startServer():
    run("0.0.0.0", 8080)
 
 #Start Alphanumeric Flickering
-#try:
-#  Thread(target=alternateLED).start()
-#except:
-#  print "Error: unable to start thread"
+try:
+  Thread(target=alternateLED).start()
+except:
+  print ("Error: unable to start thread")
 
 # Create the serial chain and set which pins it uses
-#barGraphChain = SerialChain(data_pin=17, clock_pin=11, latch_pin=24)
+barGraphChain = SerialChain(data_pin=17, clock_pin=11, latch_pin=24)
 
-#barGraphComponents = ComponentSeries(barGraphChain)
+barGraphComponents = ComponentSeries(barGraphChain)
 
 # Order is critical, this should be the order on the wire
-#barGraphComponents.add("water", "bargraph")
-#barGraphComponents.add("oxygen", "bargraph")
-#barGraphComponents.add("nitrogen", "bargraph")
+barGraphComponents.add("water", "bargraph")
+barGraphComponents.add("oxygen", "bargraph")
+barGraphComponents.add("nitrogen", "bargraph")
 
 # # Start a new encoded message
 # msg = EncodedMessage()
@@ -84,5 +104,8 @@ def startServer():
 
 # # Writes the message out to the barGraphChain and latches it when done
 # barGraphChain.write(msg.data)
+
+readInputs()
+startServer()
 
 

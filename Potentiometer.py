@@ -41,11 +41,11 @@ def potentiometer(pin):
 	else:
 		return (10)
 
-while True:
-	result1 = potentiometer(24)
-	result2 = potentiometer(18)
-	print (result1)
-	print (result2)
+#while True:
+#	result1 = potentiometer(24)
+#	result2 = potentiometer(18)
+#	print (result1)
+#	print (result2)
 	
 	#	print (max(int((((math.log(average)-4.6)*10)-4.7)/11*10.5),0))
 	#	print (int(((math.sqrt(average)-12)*1.2)/12*10.5))
