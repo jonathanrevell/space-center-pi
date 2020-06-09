@@ -7,7 +7,7 @@ from klein import run, route
 from components import ComponentSeries
 import json
 from threading import Thread
-from potentiometer import potentiometer
+from Potentiometer import potentiometer
 from switch import switch
 
 print("Started SpacePi")
