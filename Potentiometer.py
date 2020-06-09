@@ -2,8 +2,8 @@ import RPi.GPIO as GPIO
 import time
 import math
 
-GPIO.setmode(GPIO.BCM)
 def potentiometer(pin):
+	GPIO.setmode(GPIO.BCM)
 	loops = 0
 	total = 0
 	while loops != 100:
