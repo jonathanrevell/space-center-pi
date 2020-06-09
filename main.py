@@ -6,7 +6,7 @@ from encoding import EncodedMessage
 from klein import run, route
 from components import ComponentSeries
 import json
-import thread
+from threading import Thread
 from potentiometer import potentiometer
 from switch import switch
 
@@ -60,7 +60,7 @@ def startServer():
 
 #Start Alphanumeric Flickering
 #try:
-#  thread.start_new_thread(alternateLED)
+#  Thread(target=alternateLED).start()
 #except:
 #  print "Error: unable to start thread"
 
