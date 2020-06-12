@@ -9,7 +9,10 @@ import json
 from threading import Thread
 from Potentiometer import potentiometer
 from switch import switch
-from motorTest import motorForward, motorBackward
+from motors import PressureGauge, TemperatureGauge
+from maze import Maze
+
+PORT = 8080
 
 print("Started SpacePi")
 
@@ -25,28 +28,30 @@ def alternateLED():
        Out2.on()
 
 def readInputs():
-   potTemp = potentiometer(23)
-   potHumid = potentiometer(24)
-   potElec = potentiometer(25)
-   potScrub = potentiometer(8)
-   potOxy = potentiometer(7)
-   potNitro = potentiometer(12)
-   swTemp1 = switch(4)
-   swTemp2 = switch(17)
-   swHumid1 = switch(27)
-   swHumid2 = switch(22)
-   swElec1 = switch(10)
-   swElec2 = switch(9)
-   swOxy1 = switch(11)
-   swOxy2 = switch(5)
-   swNitro1 = switch(6)
-   swNitro2 = switch(13)
-   sw11 = switch(19)
-   sw12 = switch(26)
-   sw13 = switch(16)
+   inputData = {}
+   inputData["temperature"] = potentiometer(23)
+   inputData["humidity"] = potentiometer(24)
+   inputData["electrolysis"] = potentiometer(25)
+   inputData["scrubbing"] = potentiometer(8)
+   inputData["oxygen"] = potentiometer(7)
+   inputData["nitrogen"] = potentiometer(12)
+   inputData["swTemp1"] = switch(4)
+   inputData["swTemp2"] = switch(17)
+   inputData["swHumid1"] = switch(27)
+   inputData["swHumid2"] = switch(22)
+   inputData["swElec1"] = switch(10)
+   inputData["swElec2"] = switch(9)
+   inputData["swOxy1"] = switch(11)
+   inputData["swOxy2"] = switch(5)
+   inputData["swNitro1"] = switch(6)
+   inputData["swNitro2"] = switch(13)
+   inputData["maze"] = mazeInstance.read()
+   inputData["sw12"] = switch(26)
+   inputData["sw13"] = switch(16)
+   return inputData
 
 def startServer():
-   PORT = 8080
+   
    @route("/")
    def hello(request):
       return "Hello, world!"
@@ -55,14 +60,25 @@ def startServer():
    def do_post(request):
       content = json.loads(request.content.read())
       body = dict(content)
-      barGraphComponents.update(body)
+      mainSeries.update(body)
+      
+      PressureGauge.encodeValue(body["pressure"])
+      TemperatureGauge.encodeValue(body["temperature"])
+
       return "Success!"
 
-   run("0.0.0.0", 8080)
+   @route("/inputs", methods=['GET'])
+   def do_get(request):
+      return readInputs()
+
+   run("0.0.0.0", PORT)
+
+
 
 #Reset Step Motors
-motorBackward(1,512)
-motorBackward(2,512)
+print("Resetting guages")
+PressureGauge.reset()
+TemperatureGauge.reset()
 
 #Start Alphanumeric Flickering
 try:
@@ -73,29 +89,29 @@ except:
 # Create the serial chain and set which pins it uses
 barGraphChain = SerialChain(data_pin=18, clock_pin=15, latch_pin=14)
 
-barGraphComponents = ComponentSeries(barGraphChain)
+mainSeries = ComponentSeries(barGraphChain)
+mazeInstance = Maze(19)
 
 # Order is critical, this should be the order on the wire
-barGraphComponents.add("water", "bargraph")
-barGraphComponents.add("oxygen", "bargraph")
-barGraphComponents.add("nitrogen", "bargraph")
 
-# 10 bits maze
-# 10 bits x 4 bar graph
-# 15 bits x 1
-# 1 bit x 5 leds
+# 1 [10 bits] Maze
+mainSeries.addInstance("maze", mazeInstance)
+
+# 2 [55 bits] Bargraphs
+mainSeries.add("waste", "bargraph")
+mainSeries.add("water", "bargraph15")
+mainSeries.add("hydrogen", "bargraph")
+mainSeries.add("oxygen", "bargraph")
+mainSeries.add("nitrogen", "bargraph")
+
+# 3 [5 bits] Leds
+mainSeries.add("wasteWarning", "led")
+mainSeries.add("waterWarning", "led")
+mainSeries.add("hydrogenWarning", "led")
+mainSeries.add("oxygenWarning", "led")
+mainSeries.add("nitrogenWarning", "led")
+
 # 13 x 8 shift for alphanumeric
 # 200 Total
-
-# # Start a new encoded message
-# msg = EncodedMessage()
-
-# # Add as many parts to the message as are on the circuit
-# msg.encodeBarGraph(9)           # 9 LEDs lit from left to right 
-# msg.encodeReverseBarGraph(3)    # 7 unlit, then 3 lit from left to right
-# msg.encodeBarGraph(2)
-
-# # Writes the message out to the barGraphChain and latches it when done
-# barGraphChain.write(msg.data)
 
 startServer()

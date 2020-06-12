@@ -10,10 +10,16 @@ class Component:
         self.value = val
     
     def encodeValueToMessage(self, msg):
-        if self.ctype == "bargraph":
+        if self.ctype == "led":
+            return msg.encodeLED(self.value)
+        elif self.ctype == "bargraph":
             return msg.encodeBarGraph(self.value)
+        elif self.ctype == "bargraph15":
+            return msg.encodeBarGraph(self.value, 15)
         elif self.ctype == "bargraph-reverse":
             return msg.encodeReverseBarGraph(self.value)
+        elif self.ctype == "alphanumeric":
+            return msg.
         else:
             raise Exception("Unrecognized component type " + str(self.ctype))
 
@@ -30,6 +36,12 @@ class ComponentSeries:
         self.components[name] = new_component
         self.o_components.append(new_component)
         return
+
+    def addInstance(self, name, new_component):
+        if name in self.components:
+            raise Exception("ComponentSeries already contains a component named: " + str(name))
+        self.components[name] = new_component      
+        self.o_components.append(new_component)
 
     def update(self, data):
         # Start a new encoded message

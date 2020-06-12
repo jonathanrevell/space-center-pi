@@ -1,41 +1,73 @@
 class EncodedMessage:
     def __init__(self):
         self.data = []
+
+    def encodeLED(self, val):
+        if val:
+            self.data.append(True)
+        else:
+            self.data.append(False)
     
-    def encodeBarGraph(self, val):
+    def encodeBarGraph(self, val, bar_len=10):
         """
-        Provided an integer between 0 and 10
+        Provided an integer between 0 and bar_len
         Light up val number of LEDs on the bar from left to right
         """
-        if(val > 10 or val < 0):
-            raise Exception("Must be an int between 0 and 10")
+        if(val > bar_len or val < 0):
+            raise Exception("Must be an int between 0 and " + str(bar_len))
         print("Encoding bar graph " + str(val))
         counter = 1
-        while counter < 10:
+        while counter < bar_len:
             if counter <= val:
                 self.data.append(True)
             else:
                 self.data.append(False)
             counter += 1
 
-    def encodeReverseBarGraph(self, val):
+    def encodeReverseBarGraph(self, val, bar_len=10):
         """
-        Provided an integer between 0 and 10
+        Provided an integer between 0 and bar_len
         Light up val number of LEDs on the bar from right to left
         """        
-        if(val > 10 or val < 0):
-            raise Exception("Must be an int between 0 and 10")
+        if(val > bar_len or val < 0):
+            raise Exception("Must be an int between 0 and " + str(bar_len))
         
-        rem = 10 - val # Ensure the number lit up = val
+        rem = bar_len - val # Ensure the number lit up = val
         print("Encoding reverse bar graph " + str(val))
 
         counter = 1
-        while counter < 10:
+        while counter < bar_len:
             if counter <= rem:
                 self.data.append(False)
             else:
                 self.data.append(True)
             counter += 1  
+    
+    def encodeMazeValues(self, inputNum, endNum):
+        """
+        Provided an integer between 0 and 5
+        Light up val number of LEDs on the bar from right to left
+        """        
+        if(inputNum > 5 or inputNum < 0):
+            raise Exception("Must be an int between 0 and 10")
+
+        print("Encoding maze graph " + str(inputNum))
+
+        counter = 1
+        while counter < 5:
+            if counter == inputNum:
+                self.data.append(True)
+            else:
+                self.data.append(False)
+            counter += 1         
+        
+        counter = 1
+        while counter < 5:
+            if counter == endNum:
+                self.data.append(True)
+            else:
+                self.data.append(False)
+            counter += 1
     
     def encodeAlphaNumericNumber(self, val):
         """
@@ -50,7 +82,14 @@ class EncodedMessage:
         print("Encoding " + str(len(string)) + " character string for alpha numeric display")
         for ch in string:
             binstr = numdict[ch]
+            binstr = self.mapAlphaBinaryToPinOrder(binstr)
             self.encodeBinaryString(binstr)
+
+    def mapAlphaBinaryToPinOrder(self, s):
+        '''
+        To help make wiring easier
+        '''
+        return [s[4],s[3],s[2],s[1],s[0],s[5],s[6]]
 
     def encodeBinaryString(self, binstr):
         for bit in binstr:
@@ -58,11 +97,33 @@ class EncodedMessage:
                 self.data.append(False)
             if bit == "1":
                 self.data.append(True)
-    
 
+'''
+A  B  C  D  E  F  G
+0  1  2  3  4  5  6
+12 10 9  7  1  18 13|6
+'''
+
+[0,1,2,3,4,5,6]
+[4,3,2,1,0,5,6]
+
+numdict = {
+    "0": "1111110"
+    "1": "0110000"
+    "2": "1101101"
+    "3": "1111001"
+    "4": "0110011"
+    "5": "1011011"
+    "6": "1011111"
+    "7": "1110000"
+    "8": "1111111"
+    "9": "1111011"
+}
 
 # Based on the LED Backpack
 # https://github.com/adafruit/Adafruit_LED_Backpack/blob/master/Adafruit_LEDBackpack.cpp
+'''
+We probably can't use this:
 numdict = {
     " ": "0000000000000000", 
     "!": "0000000000000110", 
