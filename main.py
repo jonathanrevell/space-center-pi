@@ -9,6 +9,7 @@ import json
 from threading import Thread
 from Potentiometer import potentiometer
 from switch import switch
+from motorTest import motorForward, motorBackward
 
 print("Started SpacePi")
 
@@ -43,25 +44,6 @@ def readInputs():
    sw11 = switch(19)
    sw12 = switch(26)
    sw13 = switch(16)
-#   print (potTemp)
-#   print (potHumid)
-#   print (potElec)
-#   print (potScrub)
-#   print (potOxy)
-#   print (potNitro)
-#   print (swTemp1)
-#   print (swTemp2)
-#   print (swHumid1)
-#   print (swHumid2)
-#   print (swElec1)
-#   print (swElec2)
-#   print (swOxy1)
-#   print (swOxy2)
-#   print (swNitro1)
-#   print (swNitro2)
-#   print (sw11)
-#   print (sw12)
-#   print (sw13)
 
 def startServer():
    PORT = 8080
@@ -78,6 +60,10 @@ def startServer():
 
    run("0.0.0.0", 8080)
 
+#Reset Step Motors
+motorBackward(1,512)
+motorBackward(2,512)
+
 #Start Alphanumeric Flickering
 try:
   Thread(target=alternateLED).start()
@@ -85,7 +71,7 @@ except:
   print ("Error: unable to start thread")
 
 # Create the serial chain and set which pins it uses
-barGraphChain = SerialChain(data_pin=17, clock_pin=11, latch_pin=24)
+barGraphChain = SerialChain(data_pin=18, clock_pin=15, latch_pin=14)
 
 barGraphComponents = ComponentSeries(barGraphChain)
 
@@ -105,7 +91,4 @@ barGraphComponents.add("nitrogen", "bargraph")
 # # Writes the message out to the barGraphChain and latches it when done
 # barGraphChain.write(msg.data)
 
-readInputs()
 startServer()
-
-
