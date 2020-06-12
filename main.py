@@ -80,6 +80,13 @@ barGraphComponents.add("water", "bargraph")
 barGraphComponents.add("oxygen", "bargraph")
 barGraphComponents.add("nitrogen", "bargraph")
 
+# 10 bits maze
+# 10 bits x 4 bar graph
+# 15 bits x 1
+# 1 bit x 5 leds
+# 13 x 8 shift for alphanumeric
+# 200 Total
+
 # # Start a new encoded message
 # msg = EncodedMessage()
 
