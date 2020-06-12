@@ -17,7 +17,7 @@
 ## Installing Klein
 A better web server https://pypi.org/project/klein/0.2.3/
 
-    pip install klein
+    pip3 install klein
 
     // Or with pyenv
     pyenv exec pip install klein
