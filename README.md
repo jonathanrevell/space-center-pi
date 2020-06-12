@@ -27,10 +27,16 @@ A better web server https://pypi.org/project/klein/0.2.3/
 1. Install gpiozero pigpio https://gpiozero.readthedocs.io/en/stable/remote_gpio.html
 1. Run the program
 
-    GPIOZERO_PIN_FACTORY=mock python main.py
+    GPIOZERO_PIN_FACTORY=mock python3 main.py
 
     // Or with pyenv
     GPIOZERO_PIN_FACTORY=mock pyenv exec python main.py
+
+    //Running with a remote IP address
+    PIGPIO_ADDR=192.168.1.137 python3 main.py
+
+    // Running remotely with pyenv
+    PIGPIO_ADDR=192.168.1.137 pyenv exec python main.py
 
 
 Checking the pinout in the terminal on the Raspberry Pi itself:
