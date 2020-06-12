@@ -42,6 +42,7 @@ class SerialChain:
         """
         Writes out data to the chain
         """
+        self.pins["latch"].off()
 
         for bit in data:
             if bit == True:
