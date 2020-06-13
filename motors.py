@@ -78,7 +78,7 @@ class StepMotor:
     def forward(self, steps):
         counter = 0
         while counter < steps:
-            self.stepper.onestep(direction=stepper.FORWARD)
+            self.stepper.onestep(direction=self.stepper.FORWARD)
             counter += 1
             self.__inc_val()
         self.__computeValue()
@@ -86,7 +86,7 @@ class StepMotor:
     def backward(self, steps):
         counter = 0
         while counter < steps:
-            self.stepper.onestep(direction=stepper.BACKWARD)
+            self.stepper.onestep(direction=self.stepper.BACKWARD)
             counter += 1
             self.__dec_val()
         self.__computeValue()
