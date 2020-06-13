@@ -1,5 +1,6 @@
 import time
-from adafruit_motorkit import MotorKit, stepper
+from adafruit_motorkit import MotorKit
+from adafruit_motor import stepper
 
 kit = MotorKit()
 
