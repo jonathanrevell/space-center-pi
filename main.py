@@ -114,4 +114,8 @@ mainSeries.add("nitrogenWarning", "led")
 # 13 x 8 shift for alphanumeric
 # 200 Total
 
+
+print("RUNNING BOOT TEST")
+testBargraphs(mainSeries, ["waste", "water", "hydrogen", "oxygen", "nitrogen"])
+
 startServer()
