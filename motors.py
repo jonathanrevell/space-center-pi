@@ -1,5 +1,5 @@
 import time
-from adafruit_motorkit import MotorKit
+from adafruit_motorkit import MotorKit, stepper
 
 kit = MotorKit()
 
@@ -7,8 +7,8 @@ kit = MotorKit()
 MAX_STEPS = 512
 
 class StepMotor:
-    def __init__(self, stepper):
-        self.stepper = stepper
+    def __init__(self, _stepper):
+        self.stepper = _stepper
         self.position = 0
         self.minPosition = 0
         self.minValue = 0.0
@@ -78,7 +78,7 @@ class StepMotor:
     def forward(self, steps):
         counter = 0
         while counter < steps:
-            self.stepper.onestep(direction=self.stepper.FORWARD)
+            self.stepper.onestep(direction=stepper.FORWARD)
             counter += 1
             self.__inc_val()
         self.__computeValue()
@@ -86,7 +86,7 @@ class StepMotor:
     def backward(self, steps):
         counter = 0
         while counter < steps:
-            self.stepper.onestep(direction=self.stepper.BACKWARD)
+            self.stepper.onestep(direction=stepper.BACKWARD)
             counter += 1
             self.__dec_val()
         self.__computeValue()
