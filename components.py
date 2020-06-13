@@ -69,9 +69,15 @@ class ComponentSeries:
 
     def clear(self):
         print("Clearing series")
+
+        # Start a new encoded message
+        msg = EncodedMessage()
+
         # Iterate through the components in order to build the message
         for c in self.o_components:
             c.encodeValueToMessage(msg, reset=True)
+
+        self.wire.write(msg.data)
 
 
 
