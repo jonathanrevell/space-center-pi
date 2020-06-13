@@ -24,20 +24,9 @@ class Component:
         else:
             raise Exception("Unrecognized component type " + str(self.ctype))
 
-    def resetValueToMessage(self, msg):
-        val = 0
-        if self.ctype == "led":
-            return msg.encodeLED(val)
-        elif self.ctype == "bargraph":
-            return msg.encodeBarGraph(val)
-        elif self.ctype == "bargraph15":
-            return msg.encodeBarGraph(val, 15)
-        elif self.ctype == "bargraph-reverse":
-            return msg.encodeReverseBarGraph(val)
-        elif self.ctype == "alphanumeric":
-            return msg.encodeAlphaNumericNumber(val)
-        else:
-            raise Exception("Unrecognized component type " + str(self.ctype))
+    def resetAndEncodeToMessage(self, msg):
+        self.setValue(0)
+        self.encodeValueToMessage(msg)
 
 
 class ComponentSeries:
@@ -86,7 +75,7 @@ class ComponentSeries:
 
         # Iterate through the components in order to build the message
         for c in self.o_components:
-            c.resetValueToMessage(msg)
+            c.resetAndEncodeToMessage(msg)
 
         self.wire.write(msg.data)
 
