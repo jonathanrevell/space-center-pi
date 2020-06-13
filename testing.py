@@ -8,5 +8,5 @@ def testBargraphs(series, names):
         while(_dict[name] < 10):
             series.update(_dict)
             _dict[name] += 1
-            time.sleep(1)
+            time.sleep(0.25)
             print('.', end = '')
