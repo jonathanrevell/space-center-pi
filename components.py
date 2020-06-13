@@ -9,7 +9,12 @@ class Component:
     def setValue(self, val):
         self.value = val
     
-    def encodeValueToMessage(self, msg, val=self.value):
+    def encodeValueToMessage(self, msg, reset=False):
+        if(reset):
+            val = 0
+        else:
+            val = self.value
+
         if self.ctype == "led":
             return msg.encodeLED(val)
         elif self.ctype == "bargraph":
@@ -66,7 +71,7 @@ class ComponentSeries:
         print("Clearing series")
         # Iterate through the components in order to build the message
         for c in self.o_components:
-            c.encodeValueToMessage(msg, 0)
+            c.encodeValueToMessage(msg, reset=True)
 
 
 
