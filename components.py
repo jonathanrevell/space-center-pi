@@ -63,7 +63,7 @@ class ComponentSeries:
 
         # Iterate through the components in order to build the message
         for c in self.o_components:
-            c.encodeValueToMessage(msg)
+            c.encodeValueToMessage(msg, False)
 
         self.wire.write(msg.data)
 
