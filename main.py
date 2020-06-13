@@ -11,6 +11,7 @@ from Potentiometer import potentiometer
 from switch import switch
 from motors import PressureGauge, TemperatureGauge
 from maze import Maze
+from testing import testBargraphs
 
 PORT = 8080
 
