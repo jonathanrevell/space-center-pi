@@ -36,6 +36,11 @@ class Maze(Component):
         else:
             endNum = self.activeEndpoint
         return msg.encodeMazeValues(inputNum, endNum)
+
+    def resetAndEncodeToMessage(self, msg):
+        self.activeChemical = None
+        self.activeEndpoint = None
+        return self.encodeValueToMessage(msg)
         
     
 
