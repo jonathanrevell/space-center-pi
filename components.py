@@ -9,7 +9,7 @@ class Component:
     def setValue(self, val):
         self.value = val
     
-    def encodeValueToMessage(self, msg, reset=False):
+    def encodeValueToMessage(self, msg, reset):
         if(reset):
             val = 0
         else:
