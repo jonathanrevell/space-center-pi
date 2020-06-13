@@ -9,19 +9,20 @@ class Component:
     def setValue(self, val):
         self.value = val
     
-    def encodeValueToMessage(self, msg):
+    def encodeValueToMessage(self, msg, val=self.value):
         if self.ctype == "led":
-            return msg.encodeLED(self.value)
+            return msg.encodeLED(val)
         elif self.ctype == "bargraph":
-            return msg.encodeBarGraph(self.value)
+            return msg.encodeBarGraph(val)
         elif self.ctype == "bargraph15":
-            return msg.encodeBarGraph(self.value, 15)
+            return msg.encodeBarGraph(val, 15)
         elif self.ctype == "bargraph-reverse":
-            return msg.encodeReverseBarGraph(self.value)
+            return msg.encodeReverseBarGraph(val)
         elif self.ctype == "alphanumeric":
-            return msg.encodeAlphaNumericNumber(self.value)
+            return msg.encodeAlphaNumericNumber(val)
         else:
             raise Exception("Unrecognized component type " + str(self.ctype))
+
 
 class ComponentSeries:
     def __init__(self, wire):
@@ -60,6 +61,12 @@ class ComponentSeries:
             c.encodeValueToMessage(msg)
 
         self.wire.write(msg.data)
+
+    def clear(self):
+        print("Clearing series")
+        # Iterate through the components in order to build the message
+        for c in self.o_components:
+            c.encodeValueToMessage(msg, 0)
 
 
 
