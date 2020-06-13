@@ -19,7 +19,7 @@ class Component:
         elif self.ctype == "bargraph-reverse":
             return msg.encodeReverseBarGraph(self.value)
         elif self.ctype == "alphanumeric":
-            return msg.
+            return msg.encodeAlphaNumericNumber(self.value)
         else:
             raise Exception("Unrecognized component type " + str(self.ctype))
 
