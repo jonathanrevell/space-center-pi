@@ -12,7 +12,7 @@ class Maze(Component):
             "amonia": 1,
             "methyl alcohol": 2,
             "acetone": 3,
-            "carbon monoxide": 4
+            "carbon monoxide": 4,
             "hydrogen": 5
         }
         self.activeChemical = None
