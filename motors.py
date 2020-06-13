@@ -20,7 +20,7 @@ class StepMotor:
         self.minPosition = position
         self.minValue = value
 
-    def setMax(self, position, value)
+    def setMax(self, position, value):
         self.maxPosition = position
         self.maxValue = value
 
